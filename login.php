@@ -83,6 +83,10 @@
 										session_start();
 										$_SESSION['admin'] = $row['user_id'];
 										header("location:admin/");
+									}else if ($row['role_name'] == "super admin") {
+										session_start();
+										$_SESSION['super'] = $row['user_id'];
+										header("location:super/");
 									}
 							}else{
 								print '

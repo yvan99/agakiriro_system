@@ -45,6 +45,21 @@
 												<input type="text" placeholder="Telephone…" value="<?php echo $row['phone'];?>" pattern="07[2,3,8]{1}[0-9]{7}" name="phone" required class="span8 tip">
 											</div>
 										</div>
+                                        <div class="control-group">
+											<label class="control-label" for="basicinput">Admin</label>
+											<div class="controls">
+                                                
+                                            <select name="admin" class="form-control">
+                                                <option>Select Admin..</option>
+                                                <?php
+                                                    $query = mysqli_query($conn, "SELECT * FROM admin");
+                                                    while($row=mysqli_fetch_array($query)){
+                                                ?>
+                                                <option><?php echo $row['fullnames'] ?></option>
+                                                <?php }?>
+                                            </select>
+											</div>
+										</div>
 										<div class="control-group">
 											<div class="controls">
 												<button type="submit" class="btn" name="submit">Update Agakiriro</button>
@@ -56,14 +71,17 @@
                             </div>
 
                             <?php
-        include '..\connect.php';
         if (isset($_POST['submit'])) {
           $name=$_POST['name'];
           $location=$_POST['location'];
           $phone=$_POST['phone'];
-         $insert="UPDATE agakiriro SET name='$name', location='$location', phone='$phone' WHERE id='$id'";
-            $query=mysqli_query($conn,$insert)or die(mysqli_error());
-            echo "<script type='text/javascript'>window.location.href='manage_udu.php'</script>";
+          $admin = $_POST['admin'];
+          $sql = mysqli_query($conn, "SELECT * FROM admin WHERE fullnames = '$admin'");
+          $rows = mysqli_fetch_array($sql);
+          $admin_id = $rows['id'];
+          $insert="UPDATE agakiriro SET name='$name', location='$location', phone='$phone', admin_id='$admin_id' WHERE id='$id'";
+          $query=mysqli_query($conn,$insert)or die(mysqli_error());
+          echo "<script type='text/javascript'>window.location.href='manage_udu.php'</script>";
         }
     ?>
                         </div>

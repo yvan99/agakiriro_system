@@ -40,6 +40,21 @@
 												<input type="text" placeholder="Telephone…" pattern="07[2,3,8]{1}[0-9]{7}" name="phone" required class="span8 tip">
 											</div>
 										</div>
+                                        <div class="control-group">
+											<label class="control-label" for="basicinput">Admin</label>
+											<div class="controls">
+                                                
+                                            <select name="admin" class="form-control">
+                                                <option>Select Admin..</option>
+                                                <?php
+                                                    $query = mysqli_query($conn, "SELECT * FROM admin");
+                                                    while($row=mysqli_fetch_array($query)){
+                                                ?>
+                                                <option><?php echo $row['fullnames'] ?></option>
+                                                <?php }?>
+                                            </select>
+											</div>
+										</div>
 										<div class="control-group">
 											<div class="controls">
 												<button type="submit" class="btn" name="submit">Add Agakiriro</button>
@@ -56,6 +71,7 @@
           $name=$_POST['name'];
           $location=$_POST['location'];
           $phone=$_POST['phone'];
+          $admin = $_POST['admin'];
           $query=mysqli_query($conn,"SELECT * FROM agakiriro WHERE name='$name'");
           $fetch=mysqli_fetch_array($query);
           if ($fetch) {
@@ -69,8 +85,10 @@
 									</div>';
           }
           else{
-
-            $insert="INSERT INTO agakiriro VALUES(NULL,'$name','$location','$phone')";
+            $sql = mysqli_query($conn, "SELECT * FROM admin WHERE fullnames = '$admin'");
+            $rows = mysqli_fetch_array($sql);
+            $id = $rows['id'];
+            $insert="INSERT INTO agakiriro VALUES(NULL,'$name','$location','$phone','$id')";
             $query=mysqli_query($conn,$insert)or die(mysqli_error());
             print '
 									<div class="module-body">

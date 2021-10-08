@@ -14,11 +14,11 @@
                             <div class="module">
                                 <div class="module-head">
                                     <h3>
-                                        Manage Udukiriro</h3>
+                                        Manage Admin</h3>
                                 </div>
                                 <div class="module-body table">
                                  <?php
-								 $sql = "SELECT * from agakiriro, admin WHERE agakiriro.admin_id = admin.id";
+								 $sql = "SELECT * from admin, users WHERE admin.id = users.user_id ";
                                  $result = $conn->query($sql);
 
                                  if ($result->num_rows > 0) {
@@ -31,56 +31,56 @@
                                                     Names
                                                 </th>
                                                 <th>
-                                                    Location
+                                                    Email
                                                 </th>
                                                 <th>
                                                     Phone
                                                 </th>
                                                 <th>
-                                                    Manager
-                                                </th>
-                                                <th>
-                                                    Update/Delete
+                                                    Activate/Diactivate
                                                 </th>  
                                             </tr>
                                         </thead>
                                         <tbody>';
-    
                                   while($row = $result->fetch_assoc()) {
-                               print '<tr class="odd gradeX">
+                                      ?>
+                               <tr class="odd gradeX">
                                                 <td>
-                                                    '.$row['name'].'
+                                                    <?php echo $row['fullnames'] ?>
                                                 </td>
                                                 <td>
-                                                    '.$row['location'].'
+                                                <?php echo $row['email'] ?>
                                                 </td>
                                                 <td>
-                                                    '.$row['phone'].'
-                                                </td>
-                                                <td>
-                                                    '.$row['fullnames'].'
+                                                <?php echo $row['phone'] ?>
                                                 </td>
                                                 <td class="center">
                                                <div class="control-group">
 											<div class="controls">
 												<div class="dropdown">
-													<a class="dropdown-toggle btn" data-toggle="dropdown" href="#">Option <i class="icon-caret-down"></i></a>
-													<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-														<li><a href="update_aga.php?id='.$row['id'].'">Update</a></li>
-                                                        <li><a href="delete_aga.php?id='.$row['id'].'">Delete</a></li>
-														</ul>
+                                                    <?php
+                                                        if($row['status'] == 'active'){
+                                                    ?>
+													<a class="dropdown-toggle btn btn-danger" href="approveAccount.php?disable=<?php echo $row['user_id'];?>">Disable Account</a>
+                                                    <?php
+                                                        }else{?>
+                                                    <a class="dropdown-toggle btn btn-info" href="approveAccount.php?active=<?php echo $row['user_id'];?>">Activate Account</a>
+                                                    <?php
+                                                        }
+                                                    ?>
 												</div>
 											</div>
 										</div>
                                                 </td>
-                                            </tr>';
+                                            </tr>
+                                            <?php
                                     }
                                     } else {
                                     print '
 									<div class="module-body">
                                  <div class="alert alert-success">
 										<button type="button" class="close" data-dismiss="alert">×</button>
-										<h3 style="color:green">No APPLICATION Found!</h3>
+										<h3 style="color:green">No ADMIN Found!</h3>
 										All APPLICATION you register will be shown here.
 									</div>
 									</div>';

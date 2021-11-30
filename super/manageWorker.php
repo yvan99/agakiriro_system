@@ -7,18 +7,18 @@
                 <div class="row">
                     
                     <!-- Navbar section -->
-                    <?php require '../incl/navbar.php' ?>
+                    <?php require '../incl/inclSuper/navbar.php' ?>
             
                     <div class="span9">
                         <div class="content">
                             <div class="module">
                                 <div class="module-head">
                                     <h3>
-                                        Worker List</h3>
+                                        Manage Udukiriro</h3>
                                 </div>
                                 <div class="module-body table">
                                  <?php
-								 $sql = "SELECT * FROM worker,agakiriro WHERE worker.agakiriro_id = agakiriro.id";
+								 $sql = "SELECT * from worker, agakiriro WHERE worker.agakiriro_id  = agakiriro.id";
                                  $result = $conn->query($sql);
 
                                  if ($result->num_rows > 0) {
@@ -28,7 +28,10 @@
                                         <thead>
                                             <tr>
                                                 <th>
-                                                    Full Name
+                                                    Names
+                                                </th>
+                                                <th>
+                                                    Phone
                                                 </th>
                                                 <th>
                                                     Email
@@ -37,10 +40,10 @@
                                                     Agakiriro
                                                 </th>
                                                 <th>
-                                                    Phone
+                                                    CAPITAL
                                                 </th>
                                                 <th>
-                                                Activate/Diactivate
+                                                    Action
                                                 </th>  
                                             </tr>
                                         </thead>
@@ -52,23 +55,19 @@
                                                     '.$row['names'].'
                                                 </td>
                                                 <td>
+                                                    '.$row['phone'].'
+                                                </td>
+                                                <td>
                                                     '.$row['email'].'
                                                 </td>
                                                 <td>
                                                     '.$row['name'].'
                                                 </td>
                                                 <td>
-                                                    '.$row['phone'].'
+                                                    '.$row['capital'].'
                                                 </td>
                                                 <td class="center">
-                                               <div class="control-group">
-											<div class="controls">
-												<div class="dropdown">
-													<a class="dropdown-toggle btn" data-toggle="dropdown" href="#">Activate</a>
-													
-												</div>
-											</div>
-										</div>
+                                                    <a href="workerReport.php?id='.$row['worker_id'].'">Print Report</a>
                                                 </td>
                                             </tr>';
                                     }

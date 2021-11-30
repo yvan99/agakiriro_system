@@ -7,7 +7,7 @@
                 <div class="row">
                     
                     <!-- Navbar section -->
-                    <?php require '../incl/navbar.php' ?>
+                    <?php require '../incl/inclWorker/navbar.php' ?>
             
                     <div class="span9">
                         <div class="content">
@@ -18,7 +18,7 @@
                                 </div>
                                 <div class="module-body table">
                                  <?php
-								 $sql = "SELECT * FROM worker,agakiriro WHERE worker.agakiriro_id = agakiriro.id";
+								 $sql = "SELECT * FROM product,product_category WHERE category = type_id";
                                  $result = $conn->query($sql);
 
                                  if ($result->num_rows > 0) {
@@ -28,19 +28,25 @@
                                         <thead>
                                             <tr>
                                                 <th>
-                                                    Full Name
+                                                    Name
                                                 </th>
                                                 <th>
-                                                    Email
+                                                    Category
                                                 </th>
                                                 <th>
-                                                    Agakiriro
+                                                    Qty
                                                 </th>
                                                 <th>
-                                                    Phone
+                                                    UnitPrice
                                                 </th>
                                                 <th>
-                                                Activate/Diactivate
+                                                    Description
+                                                </th>
+                                                <th>
+                                                    CreatedDate
+                                                </th>
+                                                <th>
+                                                Action
                                                 </th>  
                                             </tr>
                                         </thead>
@@ -49,23 +55,31 @@
                                   while($row = $result->fetch_assoc()) {
                                print '<tr class="odd gradeX">
                                                 <td>
-                                                    '.$row['names'].'
+                                                    '.$row['product_name'].'
                                                 </td>
                                                 <td>
-                                                    '.$row['email'].'
+                                                    '.$row['type_name'].'
                                                 </td>
                                                 <td>
-                                                    '.$row['name'].'
+                                                    '.$row['quantity'].'
                                                 </td>
                                                 <td>
-                                                    '.$row['phone'].'
+                                                    '.$row['unit_price'].'
                                                 </td>
-                                                <td class="center">
-                                               <div class="control-group">
-											<div class="controls">
+                                                <td>
+                                                    '.$row['description'].'
+                                                </td>
+                                                <td>
+                                                    '.$row['createdDate'].'
+                                                </td>
+                                                <td>
+                                                <div class="controls">
 												<div class="dropdown">
-													<a class="dropdown-toggle btn" data-toggle="dropdown" href="#">Activate</a>
-													
+													<a class="dropdown-toggle btn" data-toggle="dropdown" href="#">Option <i class="icon-caret-down"></i></a>
+													<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+														<li><a href="approve_worker.php">Delete Product</a></li>
+                                                        <li><a href="reject_worker.php">Update Product</a></li>
+														</ul>
 												</div>
 											</div>
 										</div>

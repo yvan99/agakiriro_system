@@ -11,7 +11,7 @@
                                 </li>
                                 <li><a href="student_list.php"><i class="menu-icon icon-file"></i>BDF Report</a>
                                 </li>
-                                <li><a href="student_list.php"><i class="menu-icon icon-file"></i>View Report</a>
+                                <li><a href="manageWorker.php"><i class="menu-icon icon-file"></i>View Report</a>
                                 </li>
                             </ul>                  
 

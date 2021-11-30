@@ -49,12 +49,12 @@
 						<div class="module-body">
 							<div class="control-group">
 								<div class="controls row-fluid">
-									<input class="span12" type="text" id="inputEmail" placeholder="Username" name="username">
+									<input class="span12" type="text" id="inputEmail" placeholder="Username" name="username" required>
 								</div>
 							</div>
 							<div class="control-group">
 								<div class="controls row-fluid">
-									<input class="span12" type="password" id="inputPassword" placeholder="Password" name="password">
+									<input class="span12" type="password" id="inputPassword" placeholder="Password" name="password" required>
 								</div>
 							</div>
 						</div>
@@ -75,18 +75,22 @@
    						if (isset($_POST['submit'])) {
 							$user = $_POST['username'];
 							$pass = $_POST['password'];
-							$query = "SELECT * from users, role where users.role_id = role.role_id AND username='$user' AND password='$pass' AND status NOT IN('inactive')";
+							$query = "SELECT * from users, role where users.role_id = role.role_id AND email='$user' AND password='$pass' AND status NOT IN('inactive')";
 							$result = $conn->query($query);
 		   					$row = mysqli_fetch_array($result);
    							if ($result->num_rows > 0) {
 				   					if($row['role_name'] == "admin"){
 										session_start();
-										$_SESSION['admin'] = $row['user_id'];
+										$_SESSION['admin'] = $row['usr_id'];
 										header("location:admin/");
 									}else if ($row['role_name'] == "super admin") {
 										session_start();
-										$_SESSION['super'] = $row['user_id'];
+										$_SESSION['super'] = $row['usr_id'];
 										header("location:super/");
+									}else if($row['role_name'] == "worker"){
+										session_start();
+										$_SESSION['worker'] = $row['usr_id'];
+										header("location:worker/");
 									}
 							}else{
 								print '

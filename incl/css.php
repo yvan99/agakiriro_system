@@ -18,4 +18,19 @@ if(!isset($_SESSION['admin'])){
         <link type="text/css" href="../images/icons/css/font-awesome.css" rel="stylesheet">
         <link type="text/css" href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,400,600'
             rel='stylesheet'>
+            <script type="text/javascript">
+function reload(form)
+{
+var val=form.productTag.options[form.productTag.options.selectedIndex].value;
+self.location='purchaseOrder.php?product=' + val ;
+}
+//-->
+
+function refresh(form)
+{
+var val=form.productTag.options[form.productTag.options.selectedIndex].value;
+self.location='saleOrder.php?product=' + val ;
+}
+
+</script>
     </head>

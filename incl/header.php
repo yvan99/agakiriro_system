@@ -6,7 +6,7 @@
                     <div class="nav-collapse collapse navbar-inverse-collapse">
                         <ul class="nav pull-right">
                             <li class="nav-user dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">
-
+                                    Welcome 
                                 <b class="caret"></b></a>
                                 <ul class="dropdown-menu">
                                     <li><a href="account_settings.php">Account Settings</a></li>

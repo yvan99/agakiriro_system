@@ -22,7 +22,7 @@ function randomPassword() {
 }
 $password = randomPassword();
 $pass = password_hash($password,PASSWORD_DEFAULT);
-$insert = "INSERT INTO worker VALUES(NULL,'$full','$phone','$email','$agakiriro','$capital','$gender',$idn0)";
+$insert = "INSERT INTO worker VALUES(NULL,'$full','$phone','$email','$agakiriro','$capital','$gender','$idn0')";
 mysqli_query($conn,$insert) or die(mysqli_error($conn));
 
 

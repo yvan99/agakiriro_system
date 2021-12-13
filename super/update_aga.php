@@ -1,3 +1,7 @@
+<?php require '../incl/inclSuper/server.php';
+
+require_once '../connect.php';
+?>
 <?php require '../incl/css.php' ?>
     <body>
         <?php require '../incl/header.php' ?>
@@ -13,7 +17,7 @@
                         <div class="content">
                         <?php
                         $id = $_GET['id'];
-                        $sql = "SELECT * from agakiriro where id = '$id'";
+                        $sql = "SELECT * from agakiriro where aga_id = '$id'";
                         $result = $conn->query($sql);
                         $row = mysqli_fetch_array($result);
                         ?>
@@ -79,8 +83,8 @@
           $sql = mysqli_query($conn, "SELECT * FROM admin WHERE fullnames = '$admin'");
           $rows = mysqli_fetch_array($sql);
           $admin_id = $rows['id'];
-          $insert="UPDATE agakiriro SET name='$name', location='$location', phone='$phone', admin_id='$admin_id' WHERE id='$id'";
-          $query=mysqli_query($conn,$insert)or die(mysqli_error());
+          $insert="UPDATE agakiriro SET name='$name', location='$location', phone='$phone', admin_id='$admin_id' WHERE aga_id='$id'";
+          $query=mysqli_query($conn,$insert)or die(mysqli_error($conn));
           echo "<script type='text/javascript'>window.location.href='manage_udu.php'</script>";
         }
     ?>

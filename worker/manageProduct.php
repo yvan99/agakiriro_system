@@ -1,3 +1,13 @@
+<?php require '../incl/inclWorker/server.php';
+
+require_once '../connect.php';
+
+$current = $_SESSION['worker'];
+$searchQuery = mysqli_query($conn, "SELECT * FROM `users`,worker WHERE users.email = worker.email and usr_id = $current ");
+$search = mysqli_fetch_array($searchQuery);
+$searchId = $search['worker_id'];
+
+?>
 <?php require '../incl/css.php' ?>
     <body>
         <?php require '../incl/header.php' ?>
@@ -14,11 +24,11 @@
                             <div class="module">
                                 <div class="module-head">
                                     <h3>
-                                        Worker List</h3>
+                                        Product List</h3>
                                 </div>
                                 <div class="module-body table">
                                  <?php
-								 $sql = "SELECT * FROM product,product_category WHERE category = type_id";
+								 $sql = "SELECT * FROM product,product_category WHERE category = type_id and product.user_id = '$searchId' and product_category.user_id='$searchId' ";
                                  $result = $conn->query($sql);
 
                                  if ($result->num_rows > 0) {

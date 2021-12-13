@@ -1,3 +1,12 @@
+<?php require '../incl/inclWorker/server.php';
+
+require_once '../connect.php';
+
+$current = $_SESSION['worker'];
+$searchQuery = mysqli_query($conn, "SELECT * FROM `users`,worker WHERE users.email = worker.email and usr_id = $current ");
+$search = mysqli_fetch_array($searchQuery);
+$searchId = $search['worker_id'];
+?>
 <?php require '../incl/css.php' ?>
     <body>
         <?php require '../incl/header.php' ?>
@@ -30,7 +39,7 @@
                                             echo "Data Error";
                                             exit;
                                             }
-                                            $query2="SELECT * FROM product"; 
+                                            $query2="SELECT * FROM product where user_id = '$searchId'"; 
                                             ?>
                                             <select name='productTag' onchange="reload(this.form)">
                                                 <option value=''>Select one</option>
@@ -85,7 +94,7 @@
                             </div>
                             
                                  <?php
-								 $sql = "SELECT * FROM purchasetbl,product WHERE product = product_id";
+								 $sql = "SELECT * FROM purchasetbl,product WHERE product = product_id AND purchasetbl.user_id = '$searchId' ";
                                  $result = $conn->query($sql);
 
                                  if ($result->num_rows > 0) {
@@ -128,13 +137,13 @@
                                             </tr>
                                             ';
                                     }
-                                    print ' </tbody>
+                                    ?></tbody>
                                 
                                     </table>
                                     <br>
-                                    <form method="POST" action="operation.php?id=9">
+                                    <form method="POST" action="operation.php?id=<?php echo $searchId ?>">
                                     <button type="submit" name="transaction" class="btn btn-primary pull-left">Submit</button>
-                                    </form>';
+                                    </form><?php
                                     } 
 								 ?>
                                  <br>

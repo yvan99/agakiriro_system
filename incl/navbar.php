@@ -5,7 +5,7 @@
                                 </li>
                                 <li><a href="worker_app.php"><i class="menu-icon icon-hdd"></i>Worker Application</a>
                                 </li>
-                                <li><a href="report.php"><i class="menu-icon icon-file"></i>View Report</a>
+                                <li><a href="viewComment.php"><i class="menu-icon icon-file"></i>View Comment</a>
                                 </li>
                             </ul>                  
 

@@ -4,10 +4,9 @@ include '../connect.php';
 @$Disable = $_GET['disable'];
 if ($Approve) {
     mysqli_query($conn,"UPDATE users SET status='active' WHERE email='$Approve'");
-    header("location:manageAdmin");
+    header("location:index");
 }
 elseif ($Disable) {
     mysqli_query($conn,"UPDATE users SET status='disable' WHERE email='$Disable'");
-    header("location:manageAdmin");
+    header("location:index");
 }
-?>

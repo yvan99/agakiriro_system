@@ -1,10 +1,3 @@
-<?php
-session_start();
-require_once '../connect.php';
-if(!isset($_SESSION['admin'])){
-    header('location:../index.php');
-}
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -31,6 +24,24 @@ function refresh(form)
 var val=form.productTag.options[form.productTag.options.selectedIndex].value;
 self.location='saleOrder.php?product=' + val ;
 }
+function change(form){
+    var val=form.district.options[form.district.options.selectedIndex].value;
+    self.location='districtReport.php?district=' + val ;  
+}
+
+function changeSite(form){
+    var val=form.site.options[form.site.options.selectedIndex].value;
+    self.location='siteReport.php?site=' + val ;  
+}
+function changeDistrict(form){
+    var val=form.district.options[form.district.options.selectedIndex].value;
+    self.location='districtBDF.php?district=' + val ;  
+}
+function changeSiteReport(form){
+    var val=form.site.options[form.site.options.selectedIndex].value;
+    self.location='siteBDF.php?site=' + val ;  
+}
+
 
 </script>
     </head>

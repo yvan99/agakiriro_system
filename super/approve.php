@@ -7,6 +7,6 @@
     $row = mysqli_fetch_array($query);
     $id = $row['id'];
     
-    mysqli_query($conn,"INSERT INTO users values(NULL,2,'$id','$email','$password','active')");
+    mysqli_query($conn,"INSERT INTO users values(NULL,2,'$email','$password','active')");
     header("location:adminagakiriro.php");
 ?>

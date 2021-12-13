@@ -1,3 +1,7 @@
+<?php require '../incl/inclSuper/server.php';
+
+require_once '../connect.php';
+?>
 <?php require '../incl/css.php' ?>
     <body>
         <?php require '../incl/header.php' ?>

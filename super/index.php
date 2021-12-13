@@ -1,3 +1,7 @@
+<?php require '../incl/inclSuper/server.php';
+require_once '../connect.php';
+
+?>
 <?php require '../incl/css.php' ?>
     <body>
         <?php require '../incl/header.php' ?>
@@ -28,10 +32,18 @@
 											</div>
 										</div>
                                         <div class="control-group">
-                                            <label class="control-label" for="basicinput">Location</label>
+                                            <label class="control-label" for="basicinput">District</label>
                                             <div class="controls">
-                                                <input type="text" id="basicinput" placeholder="Location..." name="location" required class="span8">
-                                                
+                                            <select name="district" class="form-control">
+                                                <option>Select District..</option>
+                                                <option>karongi</option>
+                                                <option>ngororero</option>
+                                                <option>nyabihu</option>
+                                                <option>nyamasheke</option>
+                                                <option>rubavu</option>
+                                                <option>rusizi</option>
+                                                <option>rutsiro</option>
+                                            </select>
                                             </div>
                                         </div>
 										<div class="control-group">
@@ -69,7 +81,7 @@
         include '..\connect.php';
         if (isset($_POST['submit'])) {
           $name=$_POST['name'];
-          $location=$_POST['location'];
+          $location=$_POST['district'];
           $phone=$_POST['phone'];
           $admin = $_POST['admin'];
           $query=mysqli_query($conn,"SELECT * FROM agakiriro WHERE name='$name'");
@@ -89,7 +101,7 @@
             $rows = mysqli_fetch_array($sql);
             $id = $rows['id'];
             $insert="INSERT INTO agakiriro VALUES(NULL,'$name','$location','$phone','$id')";
-            $query=mysqli_query($conn,$insert)or die(mysqli_error());
+            $query=mysqli_query($conn,$insert)or die(mysqli_error($conn));
             print '
 									<div class="module-body">
                                  <div class="alert alert-success">

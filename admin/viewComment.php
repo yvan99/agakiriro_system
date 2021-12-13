@@ -1,6 +1,13 @@
-<?php require '../incl/inclSuper/server.php';
+<?php require '../incl/server.php';
+
 require_once '../connect.php';
+
+$current = $_SESSION['admin'];
+$searchQuery = mysqli_query($conn, "SELECT * FROM `users`,admin,agakiriro WHERE users.email = admin.email and usr_id = $current AND admin.id = agakiriro.admin_id ");
+$search = mysqli_fetch_array($searchQuery);
+$searchId = $search['aga_id'];
 ?>
+
 <?php require '../incl/css.php' ?>
     <body>
         <?php require '../incl/header.php' ?>
@@ -10,18 +17,18 @@ require_once '../connect.php';
                 <div class="row">
                     
                     <!-- Navbar section -->
-                    <?php require '../incl/inclSuper/navbar.php' ?>
+                    <?php require '../incl/navbar.php' ?>
             
                     <div class="span9">
                         <div class="content">
                             <div class="module">
                                 <div class="module-head">
                                     <h3>
-                                        Manage Udukiriro</h3>
+                                        Comment List</h3>
                                 </div>
                                 <div class="module-body table">
                                  <?php
-								 $sql = "SELECT * from agakiriro, admin WHERE agakiriro.admin_id = admin.id";
+								 $sql = "SELECT * FROM worker,agakiriro,comment where comment.user_id = worker.worker_id and worker.agakiriro_id = agakiriro.aga_id and agakiriro.aga_id = $searchId";
                                  $result = $conn->query($sql);
 
                                  if ($result->num_rows > 0) {
@@ -31,20 +38,14 @@ require_once '../connect.php';
                                         <thead>
                                             <tr>
                                                 <th>
-                                                    Names
+                                                    Worker Name
                                                 </th>
                                                 <th>
-                                                    Location
+                                                    Comment Title
                                                 </th>
                                                 <th>
-                                                    Phone
+                                                    Comment Body
                                                 </th>
-                                                <th>
-                                                    Manager
-                                                </th>
-                                                <th>
-                                                    Update/Delete
-                                                </th>  
                                             </tr>
                                         </thead>
                                         <tbody>';
@@ -52,29 +53,13 @@ require_once '../connect.php';
                                   while($row = $result->fetch_assoc()) {
                                print '<tr class="odd gradeX">
                                                 <td>
-                                                    '.$row['name'].'
+                                                    '.$row['names'].'
                                                 </td>
                                                 <td>
-                                                    '.$row['location'].'
+                                                    '.$row['comment_title'].'
                                                 </td>
                                                 <td>
-                                                    '.$row['phone'].'
-                                                </td>
-                                                <td>
-                                                    '.$row['fullnames'].'
-                                                </td>
-                                                <td class="center">
-                                               <div class="control-group">
-											<div class="controls">
-												<div class="dropdown">
-													<a class="dropdown-toggle btn" data-toggle="dropdown" href="#">Option <i class="icon-caret-down"></i></a>
-													<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-														<li><a href="update_aga.php?id='.$row['aga_id'].'">Update</a></li>
-                                                        <li><a href="delete_aga.php?id='.$row['aga_id'].'">Delete</a></li>
-														</ul>
-												</div>
-											</div>
-										</div>
+                                                    '.$row['comment_body'].'
                                                 </td>
                                             </tr>';
                                     }
@@ -83,8 +68,8 @@ require_once '../connect.php';
 									<div class="module-body">
                                  <div class="alert alert-success">
 										<button type="button" class="close" data-dismiss="alert">×</button>
-										<h3 style="color:green">No APPLICATION Found!</h3>
-										All APPLICATION you register will be shown here.
+										<h3 style="color:green">No Worker Found!</h3>
+										All Comment in your Site will be shown here.
 									</div>
 									</div>';
                                        }

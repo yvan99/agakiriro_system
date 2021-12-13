@@ -1,3 +1,13 @@
+<?php require '../incl/server.php';
+
+require_once '../connect.php';
+
+$current = $_SESSION['admin'];
+$searchQuery = mysqli_query($conn, "SELECT * FROM `users`,admin,agakiriro WHERE users.email = admin.email and usr_id = $current AND admin.id = agakiriro.admin_id ");
+$search = mysqli_fetch_array($searchQuery);
+$searchId = $search['aga_id'];
+?>
+
 <?php require '../incl/css.php' ?>
     <body>
         <?php require '../incl/header.php' ?>
@@ -18,7 +28,7 @@
                                 </div>
                                 <div class="module-body table">
                                  <?php
-								 $sql = "SELECT * FROM worker,agakiriro WHERE worker.agakiriro_id = agakiriro.id";
+								 $sql = "SELECT * FROM worker,agakiriro,users WHERE agakiriro_id= aga_id and aga_id = '$searchId' and users.email = worker.email";
                                  $result = $conn->query($sql);
 
                                  if ($result->num_rows > 0) {
@@ -63,9 +73,16 @@
                                                 <td class="center">
                                                <div class="control-group">
 											<div class="controls">
-												<div class="dropdown">
-													<a class="dropdown-toggle btn" data-toggle="dropdown" href="#">Activate</a>
-													
+												<div class="dropdown">'?>
+                                                <?php
+                                                if($row['status'] == 'active'){
+                                            ?>
+                                            <a class="dropdown-toggle btn btn-danger" href="activeWorker.php?disable=<?php echo $row['email'];?>">Disable Account</a>
+                                            <?php
+                                                }else{?>
+                                            <a class="dropdown-toggle btn btn-info" href="activeWorker.php?active=<?php echo $row['email'];?>">Activate Account</a>
+                                            <?php
+                                                }'
 												</div>
 											</div>
 										</div>
@@ -77,8 +94,8 @@
 									<div class="module-body">
                                  <div class="alert alert-success">
 										<button type="button" class="close" data-dismiss="alert">×</button>
-										<h3 style="color:green">No APPLICATION Found!</h3>
-										All APPLICATION you register will be shown here.
+										<h3 style="color:green">No Worker Found!</h3>
+										All Worker in your Site will be shown here.
 									</div>
 									</div>';
                                        }

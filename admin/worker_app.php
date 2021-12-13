@@ -1,3 +1,13 @@
+<?php require '../incl/server.php';
+
+require_once '../connect.php';
+
+$current = $_SESSION['admin'];
+$searchQuery = mysqli_query($conn, "SELECT * FROM `users`,admin,agakiriro WHERE users.email = admin.email and usr_id = $current AND admin.id = agakiriro.admin_id ");
+$search = mysqli_fetch_array($searchQuery);
+$searchId = $search['aga_id'];
+?>
+
 <?php require '../incl/css.php' ?>
     <body>
         <?php require '../incl/header.php' ?>
@@ -18,7 +28,7 @@
                                 </div>
                                 <div class="module-body table">
                                  <?php
-								 $sql = "SELECT worker_app.id,name,names,idn0,email,gender,worker_app.phone FROM worker_app,agakiriro WHERE worker_app.agakiriro = agakiriro.id";
+								 $sql = "SELECT worker_app.id,name,names,idn0,email,gender,worker_app.phone FROM worker_app,agakiriro WHERE worker_app.agakiriro = agakiriro.aga_id and aga_id = '$searchId'";
                                  $result = $conn->query($sql);
 
                                  if ($result->num_rows > 0) {
@@ -93,7 +103,7 @@
                                  <div class="alert alert-success">
 										<button type="button" class="close" data-dismiss="alert">×</button>
 										<h3 style="color:green">No APPLICATION Found!</h3>
-										All APPLICATION you register will be shown here.
+										All APPLICATION registered will be shown here.
 									</div>
 									</div>';
                                        }

@@ -1,3 +1,6 @@
+<?php require '../incl/inclSuper/server.php';
+require_once '../connect.php';
+?>
 <?php require '../incl/css.php' ?>
     <body>
         <?php require '../incl/header.php' ?>
@@ -18,7 +21,7 @@
                                 </div>
                                 <div class="module-body table">
                                  <?php
-								 $sql = "SELECT * from admin, users WHERE admin.id = users.user_id ";
+								 $sql = "SELECT * from admin, users,agakiriro WHERE admin.email = users.email and admin.id = agakiriro.admin_id";
                                  $result = $conn->query($sql);
 
                                  if ($result->num_rows > 0) {
@@ -32,6 +35,9 @@
                                                 </th>
                                                 <th>
                                                     Email
+                                                </th>
+                                                <th>
+                                                    Agakiriro
                                                 </th>
                                                 <th>
                                                     Phone
@@ -52,6 +58,9 @@
                                                 <?php echo $row['email'] ?>
                                                 </td>
                                                 <td>
+                                                <?php echo $row['name'] ?>
+                                                </td>
+                                                <td>
                                                 <?php echo $row['phone'] ?>
                                                 </td>
                                                 <td class="center">
@@ -61,10 +70,10 @@
                                                     <?php
                                                         if($row['status'] == 'active'){
                                                     ?>
-													<a class="dropdown-toggle btn btn-danger" href="approveAccount.php?disable=<?php echo $row['user_id'];?>">Disable Account</a>
+													<a class="dropdown-toggle btn btn-danger" href="approveAccount.php?disable=<?php echo $row['email'];?>">Disable Account</a>
                                                     <?php
                                                         }else{?>
-                                                    <a class="dropdown-toggle btn btn-info" href="approveAccount.php?active=<?php echo $row['user_id'];?>">Activate Account</a>
+                                                    <a class="dropdown-toggle btn btn-info" href="approveAccount.php?active=<?php echo $row['email'];?>">Activate Account</a>
                                                     <?php
                                                         }
                                                     ?>

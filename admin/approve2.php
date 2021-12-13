@@ -8,7 +8,7 @@ $row = mysqli_fetch_array($query);
 $id = $row['id'];
 $username = $row['email'];
 
-mysqli_query($conn,"INSERT INTO users values(NULL,3,'$id','$username','$pass','active')");
+mysqli_query($conn,"INSERT INTO users values(NULL,3,'$username','$pass','active')");
 mysqli_query($conn, "DELETE FROM worker_app WHERE names = '$get'");
 header("location:./");
 ?>

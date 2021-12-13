@@ -58,6 +58,10 @@
               <input type="email" class="form-control" name="email" id="email" placeholder="Your Email" data-rule="minlen:4" data-msg="Please enter email">
               <div class="validate"></div>
             </div>
+            <div class="col-md-4 form-group">
+              <input type="text" class="form-control" name="tin" id="tin" placeholder="Your TIN number" data-rule="minlen:4" data-msg="Please enter tin number">
+              <div class="validate"></div>
+            </div>
           </div>
           
           <div class="text-center"><button class="form-control" type="submit" name="submit">Register Yourself</button></div>
@@ -71,10 +75,25 @@
                 $gender = $_POST['gender'];
                 $email = $_POST['email'];
                 $capital = $_POST['capital'];
+                $tin = $_POST['tin'];
+                $query=mysqli_query($conn,"SELECT * FROM worker_app WHERE names='$fullnames'");
+                $row=mysqli_fetch_array($query);
+                if ($row) {
+                    # code...
+                }else{
                 $select = mysqli_query($conn,"SELECT * FROM agakiriro WHERE name='$temp_agakiriro'");
                 $fetch = mysqli_fetch_array($select);
-                $agakiriro = $fetch['id'];
-                mysqli_query($conn,"INSERT INTO worker_app VALUES(NULL,'$fullnames','$idno','$phone','$agakiriro','$gender','$email','$capital')") or die(mysqli_error($conn));
+                $agakiriro = $fetch['aga_id'];
+                mysqli_query($conn,"INSERT INTO worker_app VALUES(NULL,'$fullnames','$idno','$phone','$agakiriro','$gender','$email','$capital','$tin')") or die(mysqli_error($conn));
+                print '
+                <br><br>
+									<div class="module-body">
+                                 <div class="alert alert-warning">
+										<button type="button" class="close" data-dismiss="alert">×</button>
+										<h3 style="color:green">Inserted Successfully!</h3>
+									</div>
+									</div>';
+              }
             }
             
         ?>

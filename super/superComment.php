@@ -1,3 +1,6 @@
+<?php require '../incl/inclSuper/server.php';
+require_once '../connect.php';
+?>
 <?php require '../incl/css.php' ?>
     <body>
         <?php require '../incl/header.php' ?>
@@ -14,11 +17,11 @@
                             <div class="module">
                                 <div class="module-head">
                                     <h3>
-                                        Manage Udukiriro</h3>
+                                        Comment List</h3>
                                 </div>
                                 <div class="module-body table">
                                  <?php
-								 $sql = "SELECT * from worker, agakiriro WHERE worker.agakiriro_id  = agakiriro.id";
+								 $sql = "SELECT * FROM worker,agakiriro,comment where comment.user_id = worker.worker_id and worker.agakiriro_id = agakiriro.aga_id";
                                  $result = $conn->query($sql);
 
                                  if ($result->num_rows > 0) {
@@ -28,23 +31,14 @@
                                         <thead>
                                             <tr>
                                                 <th>
-                                                    Names
+                                                    Worker Name
                                                 </th>
                                                 <th>
-                                                    Phone
+                                                    Comment Title
                                                 </th>
                                                 <th>
-                                                    Email
+                                                    Comment Body
                                                 </th>
-                                                <th>
-                                                    Agakiriro
-                                                </th>
-                                                <th>
-                                                    CAPITAL
-                                                </th>
-                                                <th>
-                                                    Action
-                                                </th>  
                                             </tr>
                                         </thead>
                                         <tbody>';
@@ -55,19 +49,10 @@
                                                     '.$row['names'].'
                                                 </td>
                                                 <td>
-                                                    '.$row['phone'].'
+                                                    '.$row['comment_title'].'
                                                 </td>
                                                 <td>
-                                                    '.$row['email'].'
-                                                </td>
-                                                <td>
-                                                    '.$row['name'].'
-                                                </td>
-                                                <td>
-                                                    '.$row['capital'].'
-                                                </td>
-                                                <td class="center">
-                                                    <a href="workerReport.php?id='.$row['worker_id'].'">Print Report</a>
+                                                    '.$row['comment_body'].'
                                                 </td>
                                             </tr>';
                                     }
@@ -76,8 +61,8 @@
 									<div class="module-body">
                                  <div class="alert alert-success">
 										<button type="button" class="close" data-dismiss="alert">×</button>
-										<h3 style="color:green">No APPLICATION Found!</h3>
-										All APPLICATION you register will be shown here.
+										<h3 style="color:green">No Comment Found!</h3>
+										All Comment in your Site will be shown here.
 									</div>
 									</div>';
                                        }

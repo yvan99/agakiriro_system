@@ -1,3 +1,13 @@
+<?php require '../incl/inclWorker/server.php';
+
+require_once '../connect.php';
+$current = $_SESSION['worker'];
+$searchQuery = mysqli_query($conn, "SELECT * FROM `users`,worker WHERE users.email = worker.email and usr_id = $current ");
+$search = mysqli_fetch_array($searchQuery);
+$searchId = $search['worker_id'];
+
+
+?>
 <?php require '../incl/css.php' ?>
     <body>
         <?php require '../incl/header.php' ?>
@@ -28,78 +38,90 @@
 											</div>
 										</div>
                                         <div class="control-group">
-                                            <label class="control-label" for="basicinput">Location</label>
-                                            <div class="controls">
-                                                <input type="text" id="basicinput" placeholder="Location..." name="location" required class="span8">
-                                                
-                                            </div>
-                                        </div>
-										<div class="control-group">
-											<label class="control-label" for="basicinput">Telephone</label>
-											<div class="controls">
-												<input type="text" placeholder="Telephone…" pattern="07[2,3,8]{1}[0-9]{7}" name="phone" required class="span8 tip">
-											</div>
-										</div>
-                                        <div class="control-group">
-											<label class="control-label" for="basicinput">Admin</label>
+											<label class="control-label" for="basicinput">Category</label>
 											<div class="controls">
                                                 
-                                            <select name="admin" class="form-control">
-                                                <option>Select Admin..</option>
+                                            <select name="category" class="form-control">
+                                                <option>Select Category...</option>
                                                 <?php
-                                                    $query = mysqli_query($conn, "SELECT * FROM admin");
+                                                    $query = mysqli_query($conn, "SELECT * FROM product_category");
                                                     while($row=mysqli_fetch_array($query)){
                                                 ?>
-                                                <option><?php echo $row['fullnames'] ?></option>
+                                                <option><?php echo $row['type_name'] ?></option>
                                                 <?php }?>
                                             </select>
 											</div>
 										</div>
+                                        <div class="control-group">
+											<label class="control-label" for="basicinput">Quantity</label>
+											<div class="controls">
+												<input type="text" id="basicinput" placeholder="quantity..." name="qty" required class="span8">
+												
+											</div>
+										</div>
+                                        <div class="control-group">
+											<label class="control-label" for="basicinput">Unit Price</label>
+											<div class="controls">
+												<input type="text" id="basicinput" placeholder="unitprice..." name="price" required class="span8">
+												
+											</div>
+										</div>
+                                        <div class="control-group">
+											<label class="control-label" for="basicinput">Description</label>
+											<div class="controls">
+												<input type="text" id="basicinput" placeholder="description..." name="description" required class="span8">
+												
+											</div>
+										</div>
 										<div class="control-group">
 											<div class="controls">
-												<button type="submit" class="btn" name="submit">Add Agakiriro</button>
+												<button type="submit" class="btn" name="submit">Add Product</button>
 												<button type="reset" class="btn">Reset Form</button>
 											</div>
 										</div>
 									</form>
-									</div>
-                            </div>
-
-                            <?php
-        include '..\connect.php';
+                                    <?php
         if (isset($_POST['submit'])) {
           $name=$_POST['name'];
-          $location=$_POST['location'];
-          $phone=$_POST['phone'];
-          $admin = $_POST['admin'];
-          $query=mysqli_query($conn,"SELECT * FROM agakiriro WHERE name='$name'");
+          $type_name=$_POST['category'];
+          $sql = mysqli_query($conn,"SELECT * FROM product_category WHERE type_name='$type_name'");
+          $row = mysqli_fetch_array($sql);
+          $category = $row['type_id'];
+          $quantity = $_POST['qty'];
+          $unit = $_POST['price'];
+          $description = $_POST['description'];
+          $created = date('Y-M-D');
+          $query=mysqli_query($conn,"SELECT * FROM product WHERE product_name='$name'");
           $fetch=mysqli_fetch_array($query);
           if ($fetch) {
             # code...
             print '
 									<div class="module-body">
-                                 <div class="alert alert-warning">
+                                 <div class="alert alert-error">
 										<button type="button" class="close" data-dismiss="alert">×</button>
-										<h3 style="color:green">Already Inserted!</h3>
+										<strong>Already</strong> Inserted!
 									</div>
-									</div>';
+                                    </div>
+                                    ';
           }
           else{
-            $sql = mysqli_query($conn, "SELECT * FROM admin WHERE fullnames = '$admin'");
-            $rows = mysqli_fetch_array($sql);
-            $id = $rows['id'];
-            $insert="INSERT INTO agakiriro VALUES(NULL,'$name','$location','$phone','$id')";
+            $insert="INSERT INTO product VALUES(NULL,'$name','$category','$quantity','$unit','$description','$created','$searchId')";
             $query=mysqli_query($conn,$insert)or die(mysqli_error($conn));
             print '
 									<div class="module-body">
                                  <div class="alert alert-success">
 										<button type="button" class="close" data-dismiss="alert">×</button>
-										<h3 style="color:green">Successfuly inserted!</h3>
+										<strong>Wooww!</strong> Successfully inserted
 									</div>
-									</div>';
+                                    </div>
+                                    ';
           }
         }
     ?>
+									</div>
+                            </div>
+
+
                         </div>
                  
                     </div>
